@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const form = document.querySelector("#user-form");
     const copyright = document.querySelector("#copyright");
     const checkboxButtons = document.querySelectorAll('input[type="checkbox"]');
+    // По поводу обращений по id :)
 
     const overlay = document.createElement("div");
     overlay.classList.add("popup-overlay");

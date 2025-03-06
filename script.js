@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const mandatoryCheckbox = document.querySelector("#mandatory");
     const form = document.querySelector("#user-form");
     const copyright = document.querySelector("#copyright");
+    const checkboxButtons = document.querySelectorAll('input[type="checkbox"]');
 
     const overlay = document.createElement("div");
     overlay.classList.add("popup-overlay");
@@ -16,8 +17,8 @@ document.addEventListener("DOMContentLoaded", function () {
     popup.classList.add("popup");
     popup.innerHTML = `
         <div class="popup-content">
-            <span class="popup-close">&times;</span>
-            <h3>Результаты формы</h3>
+            <span class="popup-close"></span>
+            <h3>Результат отправки:</h3><br>
             <p id="popup-data"></p>
         </div>
     `;
@@ -30,18 +31,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (copyright) {
         const currentYear = new Date().getFullYear();
-        copyright.textContent = `© ФИО, год рождения - ${currentYear}`;
+        copyright.textContent = `© Черепанов Айнур Альбертович, 2003 - ${currentYear}`;
     } else {
-        console.error("Элемент #copyright не найден!");
+        console.error("copyright не найден");
     }
 
     if (rangeMin && rangeMax && rangeSlider) {
-        rangeMin.min = 0;
-        rangeMin.max = 100;
-        rangeMax.min = 0;
-        rangeMax.max = 100;
-        rangeSlider.min = 0;
-        rangeSlider.max = 100;
+        rangeMin.min = rangeSlider.min = rangeMax.min = 0;
+        rangeMin.max = rangeMax.max = rangeSlider.max = 100;
 
         function syncRange() {
             let minValue = parseInt(rangeMin.value) || 0;
@@ -66,7 +63,7 @@ document.addEventListener("DOMContentLoaded", function () {
     fullName.addEventListener("input", function () {
         const regex = /^[А-Яа-яЁёA-Za-z]+ [А-Яа-яЁёA-Za-z]+ [А-Яа-яЁёA-Za-z]+$/;
         if (!regex.test(this.value.trim())) {
-            this.setCustomValidity("Введите ФИО (3 слова, минимум по 2 буквы)");
+            this.setCustomValidity("Введите ФИО");
         } else {
             this.setCustomValidity("");
         }
@@ -77,7 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
             this.value = this.value.replace(/\D/g, "");
         });
     } else {
-        console.error("Поле #age не найдено!");
+        console.error("Поле с айди #age не найдено");
     }
 
     if (form) {
@@ -88,15 +85,24 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
             if (!mandatoryCheckbox || !mandatoryCheckbox.checked) {
-                alert("Отметьте обязательный чекбокс");
+                alert("Не отмечен обязательнчыфй чекбокс");
                 return;
             }
 
+            const selectedRadio = document.querySelector('input[name="tech"]:checked');
+            const radioValue = selectedRadio ? selectedRadio.value : "Не выбрано";
+            const selectedCheckboxes = Array.from(checkboxButtons).filter(checkbox => checkbox.checked);
+            const checkboxValues = selectedCheckboxes.length > 0
+                ? selectedCheckboxes.map(checkbox => checkbox.id).join(", ")
+                : "-";
+
             popupData.innerHTML = `
+                <strong>Диапазон:</strong> от ${rangeMin.value} до ${rangeMax.value} <br>
+                <strong>Select:</strong> ${optionsSelect.value} <br>
+                <strong>Radio:</strong> ${radioValue} <br>
                 <strong>ФИО:</strong> ${fullName.value} <br>
                 <strong>Возраст:</strong> ${ageInput.value} <br>
-                <strong>Диапазон:</strong> ${rangeMin.value} - ${rangeMax.value} <br>
-                <strong>Выбранный вариант:</strong> ${optionsSelect.value}
+                <strong>Выбранные чекбоксы:</strong> ${checkboxValues} <br>
             `;
             overlay.classList.add("popup-show");
             popup.classList.add("popup-show");
@@ -104,12 +110,12 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
         console.error("Форма #user-form не найдена!");
     }
+
     function closePopup() {
         overlay.classList.remove("popup-show");
         popup.classList.remove("popup-show");
     }
     popupClose.addEventListener("click", closePopup);
-
     overlay.addEventListener("click", closePopup);
     document.addEventListener("keydown", function (event) {
         if (event.key === "Escape") {

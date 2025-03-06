@@ -29,6 +29,7 @@ body {
   justify-content: center;
   align-items: center;
   font-family: var(--main-font);
+  overflow-x: hidden;
 }
 
 .header {
@@ -67,6 +68,12 @@ body {
 
   .header img {
     display: none;
+  }
+
+  .header-text h1,
+  .header-text p {
+    max-width: 80%;
+    margin-left: 10dvw;
   }
 }
 
@@ -124,6 +131,7 @@ input {
   width: var(--form-width);
   height: 35px;
   margin-top: 11px;
+  padding-left: 10px;
 }
 
 .radio-group {
@@ -163,6 +171,37 @@ section p {
   margin-top: 2svh;
 }
 
+@media screen and (max-width: 732px) {
+
+  .select-and-radio,
+  .name-and-age {
+    flex-direction: column;
+  }
+
+  .radio,
+  .age {
+    margin-left: 0;
+  }
+
+  .radio-group {
+    margin-top: 11px;
+    padding-left: 0;
+  }
+
+  .checkbox-group {
+    display: flex;
+    flex-direction: row;
+    max-width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .checkbox-1,
+  .checkbox-2 {
+    margin-top: 8px;
+  }
+
+}
+
 .popup-overlay {
   position: fixed;
   top: 0;
@@ -180,13 +219,19 @@ section p {
   left: 50%;
   transform: translate(-50%, -50%);
   background: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  background: #FFFFFF;
+  padding: 50px;
+  box-shadow: 10px 10px 0px 0px #000000;
   display: none;
   z-index: 10;
   max-width: 400px;
   text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+  .popup {
+    padding: 20px;
+  }
 }
 
 .popup-show {
@@ -195,12 +240,117 @@ section p {
 
 .popup-content {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  text-align: left;
 }
 
-.popup-close {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  font-size: 18px;
+.stick {
+  width: 80dvw;
+  height: 1px;
+  background-color: var(--dark);
+  margin: 20px auto;
+}
+
+footer {
+  max-width: 80dvw;
+}
+
+/* анимаци */
+#options-select {
+  transition: all .5s ease;
+}
+
+#options-select:hover {
   cursor: pointer;
+}
+
+#options-select:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+#options-select option {
+  transition: background-color .3s ease, color .3s ease;
+}
+
+#options-select option:hover {
+  background-color: var(--primary);
+  color: white;
+}
+
+input:hover {
+  border: 1px solid var(--primary);
+  transition: all 1s ease;
+}
+
+input[type="radio"] {
+  appearance: none;
+  width: 13px;
+  height: 13px;
+  border: 1px solid var(--primary);
+  border-radius: 100%;
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  transition: all .3s ease;
+}
+
+input[type="radio"]:checked {
+  background-color: var(--primary);
+}
+
+
+input[type="checkbox"] {
+  appearance: none;
+  width: 13px;
+  height: 13px;
+  border: 1px solid var(--primary);
+  position: relative;
+  cursor: pointer;
+}
+
+input[type="checkbox"]:checked::before {
+  content: "";
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  background-color: var(--primary);
+  top: 1px;
+  left: 1px;
+}
+
+button {
+  margin-top: 4svh;
+  width: 150px;
+  height: 38px;
+  gap: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary);
+  box-shadow: 6px 5px 0px 0px #000000;
+  color: #FFFFFF;
+  font-family: Source Code Pro;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  cursor: pointer;
+  border: none;
+  transition: all .3s ease;
+}
+
+button:hover {
+  background: #f3f3f3;
+  box-shadow: 3px 3px 2px 2px #000000;
+  transition: all .3s ease;
+  color: var(--dark);
+}
+
+button:active {
+  transition: all .3s ease;
+  color: #FFFFFF;
+  background: var(--primary);
 }

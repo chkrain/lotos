@@ -34,52 +34,59 @@ body {
 
 .header {
   display: flex;
-  flex-direction: row;
-  text-align: left;
   align-items: center;
+  justify-content: center;
   background-color: var(--dark);
-  width: 100dvw;
-  height: 32dvh;
+  width: 100%;
+  height: 210px;
 }
 
 .header-text {
   color: #FFFFFF;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.header-text h1,
-.header-text p {
-  max-width: 48%;
-  margin-left: 10dvw;
+.header-wrapper {
+  display: flex;
+  flex-direction: row;
+  max-width: 648px;
 }
 
 .header img {
-  width: 30dvw;
-  max-width: 50dvw;
-  height: 32dvh;
+  width: 30%;
+  height: 100%;
   object-fit: cover;
 }
 
-@media screen and (max-width: 648px) {
+@media screen and (max-width: 600px) {
   .header {
-    background-image: url(images/image.png);
-    background-repeat: no-repeat;
-    background-size: cover;
-  }
-
-  .header img {
-    display: none;
+    flex-direction: column;
+    height: auto;
+    text-align: center;
   }
 
   .header-text h1,
   .header-text p {
-    max-width: 80%;
-    margin-left: 10dvw;
+    max-width: 90%;
+    margin-left: 0;
+    text-align: center;
+  }
+
+  .header img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
   }
 }
 
+
 .form-container {
-  margin-top: 4svh;
-  width: 80dvw;
+  margin-top: 20px;
+  width: 100%;
+  max-width: 648px;
 }
 
 .form-container h2 {
@@ -162,7 +169,8 @@ input {
 section {
   display: flex;
   flex-direction: column;
-  max-width: 80dvw;
+  width: 100%;
+  max-width: 648px;
   margin-top: 6svh;
 }
 
@@ -247,7 +255,7 @@ section p {
 }
 
 .stick {
-  width: 80dvw;
+  width: 648px;
   height: 1px;
   background-color: var(--dark);
   margin: 20px auto;
@@ -270,6 +278,7 @@ footer {
   outline: none;
   border-color: var(--primary);
 }
+
 
 #options-select option {
   transition: background-color .3s ease, color .3s ease;
@@ -353,4 +362,20 @@ button:active {
   transition: all .3s ease;
   color: #FFFFFF;
   background: var(--primary);
+}
+
+
+input:invalid,
+select:invalid {
+  border: 2px solid red;
+}
+
+input:focus:invalid,
+select:focus:invalid {
+  border-color: red;
+  outline: none;
+}
+
+input:valid {
+  border-color: var(--primary);
 }

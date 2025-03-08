@@ -38,11 +38,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (rangeMin && rangeMax && rangeSlider) {
         rangeMin.min = rangeSlider.min = rangeMax.min = 0;
-        rangeMin.max = rangeMax.max = rangeSlider.max = 100;
+        rangeMin.max = rangeMax.max = rangeSlider.max = 150;
 
         function syncRange() {
             let minValue = parseInt(rangeMin.value) || 0;
-            let maxValue = parseInt(rangeMax.value) || 100;
+            let maxValue = parseInt(rangeMax.value) || 150;
 
             if (minValue > maxValue) {
                 minValue = maxValue;
@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     fullName.addEventListener("input", function () {
-        const regex = /^[А-Яа-яЁёA-Za-z]+ [А-Яа-яЁёA-Za-z]+ [А-Яа-яЁёA-Za-z]+$/;
+        const regex = /^(?:[А-Яа-яЁёA-Za-z]{2,})\s(?:[А-Яа-яЁёA-Za-z]{2,})\s(?:[А-Яа-яЁёA-Za-z]{2,})$/;
         if (!regex.test(this.value.trim())) {
             this.setCustomValidity("Введите ФИО");
         } else {
@@ -93,8 +93,8 @@ document.addEventListener("DOMContentLoaded", function () {
             const radioValue = selectedRadio ? selectedRadio.value : "Не выбрано";
             const selectedCheckboxes = Array.from(checkboxButtons).filter(checkbox => checkbox.checked);
             const checkboxValues = selectedCheckboxes.length > 0
-                ? selectedCheckboxes.map(checkbox => checkbox.id).join(", ")
-                : "-";
+                ? selectedCheckboxes.map(checkbox => checkbox.value).join(", ")
+                : "Не выбрано";
 
             popupData.innerHTML = `
                 <strong>Диапазон:</strong> от ${rangeMin.value} до ${rangeMax.value} <br>
@@ -123,3 +123,5 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
+
